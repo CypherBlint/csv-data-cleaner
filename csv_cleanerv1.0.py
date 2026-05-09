@@ -1,21 +1,22 @@
 
 import csv
+import pathlib as pl
 
 def import_file():
-    #------------------------
-    # path changes with computer. fix this
-    #------------------------
-    file_path = r'\input\leads-100.csv'
+    project_home_path = pl.Path(__file__).parent
+    file_path = project_home_path / "input"
+
+    print("Files Available:\n")
+    for f in file_path.iterdir():
+        print(f.name)
+
+    file_selection = input("\n\nPlease name the file you would like to run. ")
+    file_path = file_path / file_selection
 
     try:
         with open(file_path, 'r', newline="") as csv_file:
-            read_csv = csv.reader(csv_file)
+            read_csv = list(csv.reader(csv_file))
 
-            # Move the following section to a new function later
-            # Use loop to transfer csv_file to a variable that can survive
-            # outside the 'with'
-            #for row in read_csv:
-            #    print(row)
     except FileNotFoundError:
         print("Error. File not found. Please check your file name and path.")
         read_csv = ""
